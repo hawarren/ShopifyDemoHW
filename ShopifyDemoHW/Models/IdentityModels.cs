@@ -29,5 +29,7 @@ namespace ShopifyDemoHW.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<ShopifyDemoHW.Models.ShopifyAPIORders> ShopifyAPIORders { get; set; }
     }
 }
