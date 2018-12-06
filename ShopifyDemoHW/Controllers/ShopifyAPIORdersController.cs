@@ -11,13 +11,50 @@ using ShopifyDemoHW.Models;
 
 namespace ShopifyDemoHW.Controllers
 {
+    using System.IO;
+
+    using Newtonsoft.Json;
+
     public class ShopifyAPIORdersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+            public void LoadJson()
+            {
+                using (StreamReader reader = new StreamReader("SampleOrders.json"))
+                {
+                    string json = reader.ReadToEnd();
+                ShopifyAPIORders shopifyAPIORders = JsonConvert.DeserializeObject<ShopifyAPIORders>(json);
+                Console.WriteLine(shopifyAPIORders.orders.Length);
+                }
+            }
+
+
         // GET: ShopifyAPIORders
         public async Task<ActionResult> Index()
         {
+            //to read my sample JSO rather than use webclient to download it
+
+            //using (var webClient = new WebClient())
+            //{
+            //get a string representation of our JSON
+            //String rawJSON = webClient.DownloadString("http://plantplaces.com/perl/mobile/viewplantsjson.pl?Combined_Name=Redbud");
+            //convert the JSON string to series of objects
+            //ShopifyAPIORders shopifyAPIORders = JsonConvert.DeserializeObject<ShopifyAPIORders>(json);
+            // Console.WriteLine(shopifyAPIORders.);
+            //ViewBag.Plantcount = plantCollection.Plants.Count;
+            //return
+
+
+
+            //original return statement from scaffolding
+
+            using (StreamReader reader = new StreamReader("SampleOrders.json"))
+            {
+                string json = reader.ReadToEnd();
+                ShopifyAPIORders shopifyAPIORders = JsonConvert.DeserializeObject<ShopifyAPIORders>(json);
+                Console.WriteLine(shopifyAPIORders.orders.Length);
+            }
             return View(await db.ShopifyAPIORders.ToListAsync());
         }
 
